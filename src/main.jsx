@@ -9,6 +9,10 @@ import './index.css'
 import Home from './components/Home';
 import Books from './components/Books';
 import About from './components/About';
+import BookDetails from './components/BookDetails';
+import LoadingSpinner from './components/LoadingSpinner';
+import Error from './components/ErrorPage';
+import ErrorPage from './components/ErrorPage';
 
 
 
@@ -16,6 +20,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App></App>,
+    errorElement:<ErrorPage></ErrorPage>,
     children: [
       {
         path: '/',
@@ -27,8 +32,17 @@ const router = createBrowserRouter([
         loader: ()=>fetch('https://api.itbook.store/1.0/new')
       },
       {
+        path:'book/:id',
+        element: <BookDetails/>,
+        loader: ({params})=>fetch(`https://api.itbook.store/1.0/books/${params.id}`)
+      },
+      {
         path: 'about',
         element: <About></About>
+      },
+      {
+        path: 'loader',
+        element:<LoadingSpinner/>
       }
     ]
   },
